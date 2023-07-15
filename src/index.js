@@ -13,8 +13,6 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-app.use(cookieParser());
-
 
 app.use(cookieSession({
     name: 'session',
