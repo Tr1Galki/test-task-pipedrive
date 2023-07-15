@@ -18,9 +18,6 @@ app.use(cookieSession({
 }))
 
 
-
-console.log(config.callbackURL)
-
 const pipedrive = require('pipedrive')
 
 const apiClient = new pipedrive.ApiClient()
@@ -32,6 +29,8 @@ oauth2.redirectUri = config.callbackURL
 
 const port = config.port
 const host = config.host
+
+console.log(config)
 
 app.listen(port, () => {
     console.log(`Server listens https://${host}:${port}`)
