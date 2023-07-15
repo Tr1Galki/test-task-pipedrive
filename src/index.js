@@ -2,15 +2,12 @@ const express = require('express')
 const cookieSession = require('cookie-session')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const Redis = require("ioredis");
 const pipedrive = require('pipedrive')
 
 const config = require('./config')
-
+const redis = require('./redis')
 
 const app = express()
-
-const renderRedis = new Redis(config.redisURL)
 
 
 app.use(cookieParser());
@@ -59,3 +56,5 @@ app.get('/callback', (req, res) => {
         console.log(exception)
     })
 })
+
+
