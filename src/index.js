@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
+app.use(cookieParser());
+
+
 app.use(cookieSession({
     name: 'session',
     keys: ['key1']
@@ -45,22 +48,19 @@ app.get('/', async (req, res) => {
         const api = new pipedrive.DealsApi(apiClient)
         const deals = await api.getDeals()
 
-        console.log("'/' work!")
-
         res.send(deals)
     } else {
         const authUrl = apiClient.buildAuthorizationUrl()
-
+        
         res.redirect(authUrl)
     }
 })
 
 app.get('/callback', (req, res) => {
     const authCode = req.query.code
-    const promise = apiClient.authorize(code)
+    const promise = apiClient.authorize(authCode)
 
     promise.then(() => {
-        console.log("'/callback' work!")
         req.session.accessToken = apiClient.authentications.oauth2.accessToken
         res.redirect('/')
     }, (exception) => {
