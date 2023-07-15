@@ -24,6 +24,10 @@ renderRedis.set("animal", {
     name: "mouse",
     size: 14
 })
+
+renderRedis.get("animal").then((result) => {
+    console.log(`Result for key animal: ${result}`)
+})
 //
 
 
