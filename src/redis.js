@@ -8,24 +8,24 @@ console.log("Connected to Redis")
 
 
 //
-renderRedis.set("animal", "mouse")
+redis.set("animal", "mouse")
 
-renderRedis.get("animal").then((result) => {
+redis.get("animal").then((result) => {
     console.log(`Result for key animal: ${result}`)
 })
 
-renderRedis.del("animal")
+redis.del("animal")
 
-renderRedis.get("animal").then((result) => {
+redis.get("animal").then((result) => {
     console.log(`Result for key animal: ${result}`)
 })
 
-renderRedis.set("animal", {
+redis.set("animal", {
     name: "mouse",
     size: 14
 })
 
-renderRedis.get("animal").then((result) => {
+redis.get("animal").then((result) => {
     console.log(`Result for key animal: ${result}`)
 })
 //
