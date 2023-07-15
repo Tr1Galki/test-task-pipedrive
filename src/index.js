@@ -33,8 +33,8 @@ oauth2.redirectUri = config.callbackURL
 const port = config.port
 const host = config.host
 
-app.listen(port, host, () => {
-    console.log(`Server listens http://${host}:${port}`)
+app.listen(port, () => {
+    console.log(`Server listens https://${host}:${port}`)
 }) 
 
 app.get('/', async (req, res) => {
