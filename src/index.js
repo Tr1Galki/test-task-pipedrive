@@ -53,6 +53,7 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/callback', (req, res) => {
+    console.log('test')
     const authCode = req.query.code
     const promise = apiClient.authorize(authCode)
 
