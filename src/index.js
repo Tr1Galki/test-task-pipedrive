@@ -19,6 +19,7 @@ app.use(cookieSession({
 
 
 
+console.log(config.callbackURL)
 
 const pipedrive = require('pipedrive')
 
