@@ -1,33 +1,22 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const redisStorage = require('connect-redis')(session)
-const redis = require('redis')
+const cookieSession = require('cookie-session')
+
 
 const config = require('./config')
 
 const app = express()
-const client = redis.createClient();
 
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
 app.use(bodyParser.json())
+
 app.use(cookieSession({
     name: 'session',
     keys: ['key1']
 }))
-
-app.use(
-    session({
-        store: new redisStorage({
-            host: host,
-            port: 6379,
-            client: client
-        }),
-        secret: '', 
-        saveUninitialized: true
-    })
-)
-
-
 
 
 
@@ -42,10 +31,11 @@ oauth2.clientSecret = config.clientSecret
 oauth2.redirectUri = config.callbackURL
 
 const port = config.port
+const host = config.host
 
-app.listen(port, () => {
-    console.log(`Server listens http://${config.host}:${port}`)
-})
+app.listen(port, host, () => {
+    console.log(`Server listens http://${host}:${port}`)
+}) 
 
 app.get('/', async (req, res) => {
     if (req.session.accessToken !== null && req.session.accessToken !== undefined) {
@@ -54,6 +44,8 @@ app.get('/', async (req, res) => {
         // client will automatically refresh the token when it expires and call the token update callback
         const api = new pipedrive.DealsApi(apiClient)
         const deals = await api.getDeals()
+
+        console.log("'/' work!")
 
         res.send(deals)
     } else {
@@ -68,6 +60,7 @@ app.get('/callback', (req, res) => {
     const promise = apiClient.authorize(code)
 
     promise.then(() => {
+        console.log("'/callback' work!")
         req.session.accessToken = apiClient.authentications.oauth2.accessToken
         res.redirect('/')
     }, (exception) => {
