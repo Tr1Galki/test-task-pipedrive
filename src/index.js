@@ -1,12 +1,28 @@
 const express = require('express')
 const cookieSession = require('cookie-session')
 const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const redisStorage = require('connect-redis')(session)
+const redis = require('redis')
 const pipedrive = require('pipedrive')
 
 const config = require('./config')
 
 
 const app = express()
+
+
+const redisClient = redis.createClient({legacyMode: true})
+
+async function connectToRedis(client) {
+    await client.connect()
+}
+connectToRedis(redisClient)
+
+redisClient.on('connect', function () {
+    console.log('Connected to redis successfully');
+})
+
 
 app.use(cookieParser());
 
