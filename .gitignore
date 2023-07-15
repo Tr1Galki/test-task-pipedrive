@@ -1,0 +1,12 @@
+# dependencies
+node_modules/
+
+# test auth
+auth.js
+
+# env files
+.env*.local
+.env
+
+# pic
+auth.png

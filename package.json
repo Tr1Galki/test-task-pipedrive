@@ -1,0 +1,25 @@
+{
+  "name": "test-task",
+  "version": "0.0.1",
+  "description": "test task for internship ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "nalever",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "connect-redis": "^7.1.0",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.44.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "passport": "^0.6.0",
+    "passport-oauth": "^1.0.0",
+    "pipedrive": "^20.4.0",
+    "redis": "^4.6.7"
+  }
+}
