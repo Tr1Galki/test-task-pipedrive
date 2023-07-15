@@ -53,7 +53,6 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/callback', (req, res) => {
-    console.log('test')
     const authCode = req.query.code
     console.log(req.query)
     console.log(authCode)
@@ -63,6 +62,6 @@ app.get('/callback', (req, res) => {
         req.session.accessToken = apiClient.authentications.oauth2.accessToken
         res.redirect('/')
     }, (exception) => {
-        // error occurred, exception will be of type src/exceptions/OAuthProviderException
+        console.log(exception)
     })
 })
