@@ -6,8 +6,6 @@ const pipedrive = require('pipedrive')
 const AppExtensionsSDK = require('@pipedrive/app-extensions-sdk').default
 
 
-console.log(sdk)
-
 const config = require('./config')
 // const redis = require('./redis')
 
