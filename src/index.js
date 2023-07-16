@@ -68,7 +68,7 @@ app.get('/callback', async (req, res) => {
         req.session.accessToken = client.authentications.oauth2.accessToken
         res.redirect('/')
     } catch (error) {
-        res.status(500).json(error);
+        console.log(error)        
     }
 
 })
