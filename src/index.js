@@ -5,7 +5,9 @@ const session = require('express-session')
 const pipedrive = require('pipedrive')
 
 const config = require('./config')
-const redis = require('./redis')
+// const redis = require('./redis')
+const authApi = require('./auth.js')
+
 
 const app = express()
 
@@ -20,13 +22,8 @@ app.use(cookieSession({
 }))
 
 
-const apiClient = new pipedrive.ApiClient()
-
-let oauth2 = apiClient.authentications.oauth2
-oauth2.clientId = config.clientID
-oauth2.clientSecret = config.clientSecret
-oauth2.redirectUri = config.callbackURL
-
+const client = authApi.initAPIClient({})
+    
 const port = config.port
 const host = config.host
 
@@ -42,7 +39,7 @@ app.get('/', async (req, res) => {
         // res.send(deals)
         res.render('form.html')
     } else {
-        const authUrl = apiClient.buildAuthorizationUrl()
+        const authUrl = client.buildAuthorizationUrl()
 
         console.log("no token in session, go to " + authUrl)
 
@@ -50,12 +47,17 @@ app.get('/', async (req, res) => {
     }
 })
 
-app.get('/callback', (req, res) => {
+app.get('/callback', async (req, res) => {
     const authCode = req.query.code
-    const promise = apiClient.authorize(authCode)
+    
+    const promise = client.authorize(authCode)
+
+    console.log('req.query = ' + req.query)
+
+    console.log('authCode = ' + authCode)
 
     promise.then(() => {
-        req.session.accessToken = apiClient.authentications.oauth2.accessToken
+        req.session.accessToken = client.authentications.oauth2.accessToken
         res.redirect('/')
     }, (exception) => {
         console.log(exception)
