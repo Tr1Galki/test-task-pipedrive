@@ -37,6 +37,9 @@ app.get('/', async (req, res) => {
         // const deals = await api.getDeals()
 
         // res.send(deals)
+
+        console.log("succesfully authorized")
+
         res.render('form.html')
     } else {
         const authUrl = client.buildAuthorizationUrl()
@@ -48,28 +51,16 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/callback', async (req, res) => {
-    // const authCode = req.query.code
+    const authCode = req.query.code
 
-    // const promise = client.authorize(authCode)
+    const promise = client.authorize(authCode)
 
-    // promise.then(() => {
-    //     req.session.accessToken = client.authentications.oauth2.accessToken
-    //     res.redirect('/')
-    // }, (exception) => {
-    //     console.log(exception)
-    // })
-
-    try {
-        const { code } = req.query
-        // Get the access token
-        const client = authApi.initAPIClient({})
-        const token = await client.authorize(code)
-        authApi.updateTokens(client, token)
+    promise.then(() => {
         req.session.accessToken = client.authentications.oauth2.accessToken
         res.redirect('/')
-    } catch (error) {
-        console.log(error)        
-    }
+    }, (exception) => {
+        console.log(exception)
+    })
 
 })
 
