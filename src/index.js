@@ -23,7 +23,7 @@ app.use(cookieSession({
 
 
 const client = authApi.initAPIClient({})
-    
+
 const port = config.port
 const host = config.host
 
@@ -47,23 +47,31 @@ app.get('/', async (req, res) => {
     }
 })
 
-app.get('/callback', (req, res) => {
-    const authCode = req.query.code
-    
-    const promise = client.authorize(authCode)
+app.get('/callback', async (req, res) => {
+    // const authCode = req.query.code
 
-    console.log('req.query = ' + req.query)
-    console.log(req.query.accessToken)
-    console.log(req.query.refresh_token)
+    // const promise = client.authorize(authCode)
 
-    console.log('authCode = ' + authCode)
+    // promise.then(() => {
+    //     req.session.accessToken = client.authentications.oauth2.accessToken
+    //     res.redirect('/')
+    // }, (exception) => {
+    //     console.log(exception)
+    // })
 
-    promise.then(() => {
-        req.session.accessToken = client.authentications.oauth2.accessToken
-        res.redirect('/')
-    }, (exception) => {
-        console.log(exception)
-    })
+    try {
+        const { code } = req.query
+        // Get the access token
+        const client = authApi.initAPIClient({})
+        const token = await client.authorize(code)
+        authApi.updateTokens(client, token)
+        // Get the currently logged in user
+        const user = await authApi.getLoggedInUser(client)
+        res.status(200).json('Successfully authorized');
+    } catch (error) {
+        res.status(500).json(error);
+    }
+
 })
 
 
