@@ -5,10 +5,12 @@ const session = require('express-session')
 const pipedrive = require('pipedrive')
 
 const config = require('./config')
-const redis = require('./redis')
+// const redis = require('./redis')
 
 const app = express()
 
+app.set('views', '../views');
+app.engine('html', require('ejs').renderFile)
 
 app.use(cookieParser());
 
@@ -34,10 +36,11 @@ app.listen(port, () => {
 
 app.get('/', async (req, res) => {
     if (req.session.accessToken !== null && req.session.accessToken !== undefined) {
-        const api = new pipedrive.DealsApi(apiClient)
-        const deals = await api.getDeals()
+        // const api = new pipedrive.DealsApi(apiClient)
+        // const deals = await api.getDeals()
 
-        res.send(deals)
+        // res.send(deals)
+        res.render('form.html')
     } else {
         const authUrl = apiClient.buildAuthorizationUrl()
 
