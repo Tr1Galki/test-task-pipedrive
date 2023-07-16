@@ -5,11 +5,11 @@ const session = require('express-session')
 const pipedrive = require('pipedrive')
 
 const config = require('./config')
-// const redis = require('./redis')
+const redis = require('./redis')
 
 const app = express()
 
-app.set('views', '../views');
+app.set('views', './views');
 app.engine('html', require('ejs').renderFile)
 
 app.use(cookieParser());
