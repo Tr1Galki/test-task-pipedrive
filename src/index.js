@@ -65,9 +65,8 @@ app.get('/callback', async (req, res) => {
         const client = authApi.initAPIClient({})
         const token = await client.authorize(code)
         authApi.updateTokens(client, token)
-        // Get the currently logged in user
-        const user = await authApi.getLoggedInUser(client)
-        res.status(200).json('Successfully authorized');
+        req.session.accessToken = client.authentications.oauth2.accessToken
+        res.redirect('/')
     } catch (error) {
         res.status(500).json(error);
     }
