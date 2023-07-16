@@ -1,19 +1,18 @@
-<!DOCTYPE html>
 <html>
-    <head>
+  <head>
+    <title>Custom UI: Basic HTML example</title>
+    <link rel="stylesheet" href="style.css">
 
-    </head>
-    <body>
+    <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
+    <script>
+      (async function () {
+        const sdk = await new AppExtensionsSdk().initialize();
+      })();
+    </script>
+  </head>
 
-        <div>
-            <form>
-                <fieldset>
-                    <legend>test form</legend>
-                    <input type="text">
-                    <input type="cehckbox">
-                </fieldset>
-            </form>
-        </div>
-
-    </body>
+  <body>
+    <h2>Hello from Custom UI</h2>
+    <p>Open any deal and Check the details section 🏃‍♂️</p>
+  </body>
 </html>

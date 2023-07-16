@@ -3,15 +3,16 @@ const cookieSession = require('cookie-session')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const pipedrive = require('pipedrive')
+const AppExtensionsSDK = require('@pipedrive/app-extensions-sdk').default
+
+
+console.log(sdk)
 
 const config = require('./config')
 // const redis = require('./redis')
 
 
 const app = express()
-
-app.set('views', './views');
-app.engine('html', require('ejs').renderFile)
 
 app.use(cookieParser());
 
