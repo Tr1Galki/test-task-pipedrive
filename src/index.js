@@ -44,6 +44,8 @@ app.get('/', async (req, res) => {
     } else {
         const authUrl = apiClient.buildAuthorizationUrl()
 
+        console.log("no token in session, go to " + authUrl)
+
         res.redirect(authUrl)
     }
 })
