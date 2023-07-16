@@ -21,9 +21,6 @@ app.use(cookieSession({
     keys: ['key1']
 }))
 
-
-const client = authApi.initAPIClient({})
-
 const port = config.port
 const host = config.host
 
@@ -32,6 +29,8 @@ app.listen(port, () => {
 })
 
 app.get('/', async (req, res) => {
+    const client = authApi.initAPIClient({})
+
     if (req.session.accessToken !== null && req.session.accessToken !== undefined) {
         // const api = new pipedrive.DealsApi(apiClient)
         // const deals = await api.getDeals()
@@ -39,8 +38,6 @@ app.get('/', async (req, res) => {
         // res.send(deals)
 
         console.log("succesfully authorized")
-
-        res.render('form.html')
     } else {
         const authUrl = client.buildAuthorizationUrl()
 
@@ -51,6 +48,8 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/callback', async (req, res) => {
+    const client = authApi.initAPIClient({})
+    
     const authCode = req.query.code
 
     const promise = client.authorize(authCode)
