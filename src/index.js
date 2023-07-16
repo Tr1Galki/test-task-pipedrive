@@ -47,12 +47,14 @@ app.get('/', async (req, res) => {
     }
 })
 
-app.get('/callback', async (req, res) => {
+app.get('/callback', (req, res) => {
     const authCode = req.query.code
     
     const promise = client.authorize(authCode)
 
     console.log('req.query = ' + req.query)
+    console.log(req.query.accessToken)
+    console.log(req.query.refresh_token)
 
     console.log('authCode = ' + authCode)
 
